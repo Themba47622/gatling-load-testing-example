@@ -34,9 +34,9 @@ class Example4 extends Simulation {
   val csvFeeder = csv("data/crocodiles.csv").circular
 
   /** API Calls * */
-  def postVodAuth() = {
+  def getCrocodilesById() = {
     feed(csvFeeder).
-      exec(http("POST /public/crocodiles/")
+      exec(http("GET /public/crocodiles/${id}")
         .post("/public/crocodiles/${id}")
         .check(status.is(200)))
   }
@@ -51,7 +51,7 @@ class Example4 extends Simulation {
   /** Scenarios * */
   val scn = scenario("Entitlements")
     .forever() {
-      exec(postVodAuth())
+      exec(getCrocodilesById())
         .pause(1)
         .exec(getCrocodiles())
         .pause(1)
